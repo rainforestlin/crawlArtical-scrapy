@@ -1,7 +1,8 @@
+__author__="Julianlee"
 import requests
 #python2中是cookielib，Python3中是http下的cookiejar
 try:
-    import cookielib
+    import cookilelib
 except:
     import http.cookiejar as cookielib
 
@@ -9,10 +10,6 @@ import re
 import json
 import time
 from PIL import Image
-
-
-
-
 agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:55.0) Gecko/20100101 Firefox/55.0"
 headers = {
     "HOST":"www.zhihu.com",
@@ -46,7 +43,6 @@ def get_captcha():
     captcha_image = session.get(captcha_url, headers=headers)
     with open('captcha.gif', 'wb') as f:
         f.write(captcha_image.content)
-        f.close()
     try:
         im=Image.open("captcha.gif")
         im.show()

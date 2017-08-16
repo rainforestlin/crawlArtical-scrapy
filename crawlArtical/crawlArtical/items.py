@@ -82,3 +82,33 @@ class JobboleArticleItem(scrapy.Item):
     url_object_id=scrapy.Field(
         input_processor=MapCompose(set_md5)
     )
+
+class ZhihuQuestionItem(scrapy.Item):
+    #知乎question的item
+    zhihu_id = scrapy.Field()
+    topics = scrapy.Field()
+    url = scrapy.Field()
+    title = scrapy.Field()
+    content = scrapy.Field()
+    # creat_time = scrapy.Field()
+    # update_time = scrapy.Field()
+    answer_num = scrapy.Field()
+    comments_num = scrapy.Field()
+    watch_user_num = scrapy.Field()
+    click_num = scrapy.Field()
+    crawl_time = scrapy.Field()
+    crawl_update_time = scrapy.Field()
+
+class ZhihuAnswerItem(scrapy.Item):
+    #知乎回答的Item
+    zhihu_id = scrapy.Field()
+    url = scrapy.Field()
+    question_id = scrapy.Field()
+    author_id = scrapy.Field()
+    content = scrapy.Field()
+    # creat_time = scrapy.Field()
+    # update_time = scrapy.Field()
+    praise_num = scrapy.Field()
+    comments_num = scrapy.Field()
+    crawl_time = scrapy.Field()
+    crawl_update_time = scrapy.Field()
