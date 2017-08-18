@@ -5,6 +5,7 @@ import json
 from urllib import parse
 from scrapy.loader import ItemLoader
 from ..items import ZhihuAnswerItem,ZhihuQuestionItem
+import time
 class ZhihuSpider(scrapy.Spider):
     name = "zhihu"
     allowed_domains=["www.zhihu.com"]
@@ -19,8 +20,8 @@ class ZhihuSpider(scrapy.Spider):
         """
         提取出check_login中yield中的URL即为知乎首页
         将其中所有的URL中类似/question/xxxx的URL提取出来，然后下载后放入解析函数
-        :param response: 
-        :return: 
+        :param response:
+        :return:
         """
         all_urls = response.css("a::attr(href)").extract()
 
@@ -39,8 +40,8 @@ class ZhihuSpider(scrapy.Spider):
     def parse_question(self,response):
         """
         处理question页面，从页面中取出我们需要的item
-        :param response: 
-        :return: 
+        :param response:
+        :return:
         """
         if "QuestionHeader-title" in response.text:
             #知乎的新版本
@@ -60,12 +61,12 @@ class ZhihuSpider(scrapy.Spider):
 
         else:
             #知乎的老版本
-            
+
             pass
     def start_requests(self):
         #因为要登录后才能查看知乎，所以要重写入口
 
-        return [scrapy.Request("https://www.zhihu.com/#signin",headers=self.headers,meta={"cookiejar":1 },callback=self.login)]
+        return [scrapy.Request("https://www.zhihu.com/#signin",headers=self.headers,callback=self.login)]
 
     def login(self,response):
 
@@ -95,17 +96,18 @@ class ZhihuSpider(scrapy.Spider):
                     "captcha":""
                 }
 
-        captcha_url = "https://www.zhihu.com/captcha.gif?&type=login"
-        #因为scrapy是一个异步框架，所以为了保证验证码在同一个session下，就将这个request yield出去
-        yield scrapy.Request(url=captcha_url,
-                             headers=self.headers,
-                             meta={"post_data":post_data,
-                                   "post_url":post_url,
-                                   "cookiejar":response.meta['cookiejar']},
-                             callback=self.login_after_captcha)
-
+        return [scrapy.FormRequest(
+                url=post_url,
+                formdata=post_data,
+                headers=self.headers,
+                meta={"post_data": post_data,
+                      "post_url": post_url,
+                      },
+                callback=self.check_login
+            )]
     def login_after_captcha(self,response):
         #获取验证码
+        print(response.headers)
         post_data = response.meta.get("post_data","")
         post_url = response.meta.get("post_url","")
         with open('captcha.gif', 'wb') as f:
@@ -121,13 +123,24 @@ class ZhihuSpider(scrapy.Spider):
             url=post_url,
             formdata=post_data,
             headers=self.headers,
-            meta={"cookiejar":response.meta['cookiejar']},
-            callback=self.check_login
+            callback=self.check_login,
         )]
     def check_login(self,response):
         response_text = json.loads(response.body)
-        print(response.meta.get("cookiejar"))
         if response_text["r"] == 0:
+            headers = response.headers
+            cookie = dict(headers)[b'Set-Cookie']
+            cookie = [str(c, encoding="utf-8") for c in cookie]
+            cookies = ";".join(cookie)
             #登录成功后才开始使用start_urls
             for url in self.start_urls:
                 yield scrapy.Request(url,headers=self.headers,dont_filter=True)
+        else:
+            captcha_url = "https://www.zhihu.com/captcha.gif?&type=login"
+            #因为scrapy是一个异步框架，所以为了保证验证码在同一个session下，就将这个request yield出去
+            yield scrapy.Request(url=captcha_url,
+                                     headers=self.headers,
+                                     meta={"post_data":response.meta.get("post_data"),
+                                           "post_url":response.meta.get("post_url"),
+                                           },
+                                     callback=self.login_after_captcha)

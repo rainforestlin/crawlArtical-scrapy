@@ -39,10 +39,11 @@ COOKIES_DEBUG = True
 #TELNETCONSOLE_ENABLED = False
 
 # Override the default request headers:
-#DEFAULT_REQUEST_HEADERS = {
-#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-#   'Accept-Language': 'en',
-#}
+DEFAULT_REQUEST_HEADERS = {
+  'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+  'Accept-Language': 'en',
+ "Cookies":'l_n_c=1; Domain=zhihu.com; Path=/;l_cap_id=; Domain=zhihu.com; expires=Wed, 17 Aug 2016 10:22:47 GMT; Path=/;z_c0="MS4xY2t5cUJRQUFBQUFYQUFBQVlRSlZUWGY3dkZsdWlFNFFkUlkwZkxRZ25ZejBPMUJwVmlyTWZRPT0=|1502965367|fcf257f7a83967cf4eeedfa1af723f94444e0192"; Domain=zhihu.com; expires=Sat, 16 Sep 2017 10:22:47 GMT; httponly; Path=/;n_c=; Domain=zhihu.com; expires=Wed, 17 Aug 2016 10:22:47 GMT; Path=/'
+}
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html

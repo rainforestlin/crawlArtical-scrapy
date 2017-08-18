@@ -20,6 +20,7 @@ headers = {
 session = requests.session()
 session.cookies = cookielib.LWPCookieJar(filename='cookies.txt')
 try:
+    print("d")
     session.cookies.load(ignore_discard=True)
 except:
     print("Cookie 未能加载")
