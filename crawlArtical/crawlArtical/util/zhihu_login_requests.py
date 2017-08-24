@@ -34,7 +34,7 @@ def get_xsrf():
         return match_obj.group(1)
     else:
         return ""
-
+#
 # 获取验证码
 def get_captcha():
 
@@ -44,6 +44,7 @@ def get_captcha():
     captcha_image = session.get(captcha_url, headers=headers)
     with open('captcha.gif', 'wb') as f:
         f.write(captcha_image.content)
+        f.close()
     try:
         im=Image.open("captcha.gif")
         im.show()
@@ -53,7 +54,23 @@ def get_captcha():
     except:
         print("未打开验证码文件")
 
+def get_captcha():
+    # import time
+    # t = str(int(time.time()*1000))
+    # captcha_url = "https://www.zhihu.com/captcha.gif?r={0}&type=login".format(t)
+    captcha_url = "https://www.zhihu.com/captcha.gif?&type=login"
+    t = session.get(captcha_url, headers=headers)
+    with open("captcha.jpg", "wb") as f:
+        f.write(t.content)
+        f.close()
 
+    from PIL import Image
+    try:
+        im = Image.open('captcha.jpg')
+        im.show()
+        im.close()
+    except:
+        print("未打开验证码文件")
 
 def isLogin():
     # 通过查看用户个人信息来判断是否已经登录
