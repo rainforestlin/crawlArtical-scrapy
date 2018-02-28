@@ -91,19 +91,21 @@ class MysqlTwistedPipeline(object):
 
     def do_insert(self,cursor,item):
         # 执行具体的插入.会通过dbpool.runInteraction进行自动的异步提交
-        insert_sql="""
-         insert into jobbole_article(url_object_id,title,create_time,tag_name
-                    ,praise_count,conment_count
-                    ,bookmark_count,content,front_image_url,post_url
-                )
-                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
-        """
-        cursor.execute(insert_sql,(item["url_object_id"],item["title"],item["create_time"],
-                                        item["tag_name"],item["praise_count"],item["conment"],
-                                        item["bookmark_count"],item["content"],item["front_image_url"],
-                                        item["post_url"]
-                                        ))
-
+        # insert_sql="""
+        #  insert into jobbole_article(url_object_id,title,create_time,tag_name
+        #             ,praise_count,conment_count
+        #             ,bookmark_count,content,front_image_url,post_url
+        #         )
+        #          VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        # """
+        # cursor.execute(insert_sql,(item["url_object_id"],item["title"],item["create_time"],
+        #                                 item["tag_name"],item["praise_count"],item["conment"],
+        #                                 item["bookmark_count"],item["content"],item["front_image_url"],
+        #                                 item["post_url"]
+        #                                 ))
+        # 将SQL语句写入到每个item里，不用每个item都写个insert方法
+        insert_sql,params = item.get_insert_sql()
+        cursor.execute(insert_sql,params)
 class ArticalImagePipeline(ImagesPipeline):
     def item_completed(self, results, item, info):
         for ok,value in results:

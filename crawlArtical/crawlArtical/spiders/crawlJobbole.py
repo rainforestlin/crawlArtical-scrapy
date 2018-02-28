@@ -5,7 +5,7 @@ from urllib import parse
 from ..util.common import get_md5
 import datetime
 
-from scrapy.loader import ItemLoader#默认的loader
+# from scrapy.loader import ItemLoader#默认的loader
 from ..items import JobboleArticleItemLoader
 
 
@@ -22,7 +22,7 @@ class crawlJobbole(scrapy.Spider):
             yield Request(url=parse.urljoin(response.url,post_url),meta={"front_image_url":front_image_url},callback=self.parse_detail)
         #提取出下一页
         next_page=response.css(".next.page-numbers::attr(href)").extract_first()
-        # yield Request(next_page,self.parse)
+        yield Request(next_page,self.parse)
     def parse_detail(self,response):
         # jobbloe_ArticalItem=JobboleArticalItem()
         #

@@ -27,10 +27,10 @@ ROBOTSTXT_OBEY =False
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+# DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
-#CONCURRENT_REQUESTS_PER_DOMAIN = 16
-#CONCURRENT_REQUESTS_PER_IP = 16
+CONCURRENT_REQUESTS_PER_DOMAIN = 16
+CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = True
@@ -69,8 +69,8 @@ ITEM_PIPELINES = {
     'crawlArtical.pipelines.CrawlarticalPipeline': 300,
      # 'scrapy.pipelines.images.ImagesPipeline':1,
      #  'crawlArtical.pipelines.ArticalImagePipeline':1,
-     #   "crawlArtical.pipelines.MysqlTwistedPipeline":2,
-      "crawlArtical.pipelines.MysqlPipeline":2
+       "crawlArtical.pipelines.MysqlTwistedPipeline":2,
+     #  "crawlArtical.pipelines.MysqlPipeline":2
 }
 IMAGES_URLS_FIELD="front_image_url"
 project_dir=os.path.abspath(os.path.dirname(__file__))

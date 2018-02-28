@@ -80,112 +80,118 @@
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
     <column id="25" parent="8" name="content">
-      <Position>5</Position>
+      <Position>6</Position>
       <DataType>longtext|0</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="26" parent="8" name="praise_num">
-      <Position>6</Position>
-      <DataType>int(10)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="27" parent="8" name="comments_num">
       <Position>7</Position>
       <DataType>int(10)|0</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+    </column>
+    <column id="27" parent="8" name="comments_num">
+      <Position>8</Position>
+      <DataType>int(10)|0</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
     <column id="28" parent="8" name="creat_time">
-      <Position>8</Position>
-      <DataType>datetime|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="29" parent="8" name="update_time">
       <Position>9</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="30" parent="8" name="crawl_time">
+    <column id="29" parent="8" name="update_time">
       <Position>10</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="31" parent="8" name="crawl_update_time">
+    <column id="30" parent="8" name="crawl_time">
       <Position>11</Position>
       <DataType>datetime|0</DataType>
+      <NotNull>1</NotNull>
     </column>
-    <key id="32" parent="8" name="PRIMARY">
+    <column id="31" parent="8" name="crawl_update_time">
+      <Position>12</Position>
+      <DataType>datetime|0</DataType>
+    </column>
+    <column id="32" parent="8" name="author_name">
+      <Position>5</Position>
+      <DataType>varchar(255)|0</DataType>
+    </column>
+    <key id="33" parent="8" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>zhihu_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="33" parent="9" name="zhihu_id">
+    <column id="34" parent="9" name="zhihu_id">
       <Position>1</Position>
       <DataType>bigint(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="34" parent="9" name="topics">
+    <column id="35" parent="9" name="topics">
       <Position>2</Position>
       <DataType>varchar(255)|0</DataType>
     </column>
-    <column id="35" parent="9" name="url">
+    <column id="36" parent="9" name="url">
       <Position>3</Position>
       <DataType>varchar(300)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="36" parent="9" name="title">
+    <column id="37" parent="9" name="title">
       <Position>4</Position>
       <DataType>varchar(200)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="37" parent="9" name="content">
+    <column id="38" parent="9" name="content">
       <Position>5</Position>
       <DataType>longtext|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="38" parent="9" name="creat_time">
+    <column id="39" parent="9" name="creat_time">
       <Position>6</Position>
       <DataType>datetime|0</DataType>
       <DefaultExpression>&apos;0000-00-00 00:00:00&apos;</DefaultExpression>
     </column>
-    <column id="39" parent="9" name="update_time">
+    <column id="40" parent="9" name="update_time">
       <Position>7</Position>
       <DataType>datetime|0</DataType>
       <DefaultExpression>&apos;0000-00-00 00:00:00&apos;</DefaultExpression>
     </column>
-    <column id="40" parent="9" name="answer_num">
+    <column id="41" parent="9" name="answer_num">
       <Position>8</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="41" parent="9" name="comments_num">
+    <column id="42" parent="9" name="comments_num">
       <Position>9</Position>
       <DataType>int(10)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="42" parent="9" name="watch_user_num">
+    <column id="43" parent="9" name="watch_user_num">
       <Position>10</Position>
       <DataType>int(10)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="43" parent="9" name="click_num">
+    <column id="44" parent="9" name="click_num">
       <Position>11</Position>
       <DataType>int(10)|0</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
     </column>
-    <column id="44" parent="9" name="crawl_time">
+    <column id="45" parent="9" name="crawl_time">
       <Position>12</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="45" parent="9" name="crawl_update_time">
+    <column id="46" parent="9" name="crawl_update_time">
       <Position>13</Position>
       <DataType>datetime|0</DataType>
     </column>
-    <key id="46" parent="9" name="PRIMARY">
+    <key id="47" parent="9" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>zhihu_id</ColNames>
       <Primary>1</Primary>

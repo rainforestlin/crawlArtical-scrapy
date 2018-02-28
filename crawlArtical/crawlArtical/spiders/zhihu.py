@@ -17,6 +17,7 @@ class ZhihuSpider(scrapy.Spider):
     'Connection': 'keep - alive',
     }
     #answer第一页的请求URL
+    #url为知乎提供的API
     start_answer_urls = "http://www.zhihu.com/api/v4/questions/{0}/answers?" \
                         "sort_by=default&include=data%5B%2A%5D.is_normal%2Cadmin_closed_comment%2" \
                         "Creward_info%2Cis_collapsed%2Cannotation_action%2Cannotation_detail%2Ccollapse_reason%2" \
@@ -92,6 +93,7 @@ class ZhihuSpider(scrapy.Spider):
                 # 如果提取到的不是question的URL，则进行跟踪
                 else:
                     # pass
+                    #若没有发现question的URL，则对获取的URL进行进一步解析
                     yield scrapy.Request(url, headers=self.headers, callback=self.parse)
 
         else:
@@ -111,7 +113,7 @@ class ZhihuSpider(scrapy.Spider):
             AnswerItem["url"] = answer["url"]
             AnswerItem["question_id"] = answer["question"]["id"]
             AnswerItem["author_id"] = answer["author"]["id"] if "id" in answer["author"] and answer["author"]["id"] is not "0" else None
-            AnswerItem["author_name"] = answer["author"]["name"] if "id" in answer["author"] and  answer["author"]["id"] is not "0" else "匿名用户"
+            AnswerItem["author_name"] = answer["author"]["name"] if "id" in answer["author"] and answer["author"]["id"] is not "0" else "匿名用户"
             AnswerItem["content"] = answer["content"] if "content" in answer else None
             AnswerItem["praise_num"] = answer["voteup_count"]
             AnswerItem["comments_num"] = answer["comment_count"]
@@ -120,9 +122,9 @@ class ZhihuSpider(scrapy.Spider):
             AnswerItem["crawl_time"] = datetime.datetime.now()
             yield AnswerItem
         if not is_end:
-            yield scrapy.Request(next_url,headers=self.headers,callback=self.parse_answer())
+            yield scrapy.Request(next_url,headers=self.headers,callback=self.parse_answer)
 
-        pass
+
     def start_requests(self):
         #因为要登录后才能查看知乎，所以要重写入口
 
@@ -176,9 +178,9 @@ class ZhihuSpider(scrapy.Spider):
             im = Image.open("captcha.gif")
             im.show()
             captcha = input("please input the captcha:")
+            post_data["captcha"] = captcha
         except:
             print("未打开验证码文件")
-        post_data["captcha"] = captcha
         return [scrapy.FormRequest(
             url=post_url,
             formdata=post_data,
